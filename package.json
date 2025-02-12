@@ -1,0 +1,29 @@
+{
+  "name": "search-flight-crud",
+  "version": "1.0.0",
+  "description": "micro service for flights crud opr and search functionality",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rawat-aryman/Flyht.git"
+  },
+  "keywords": [
+    "nodejs",
+    "backend",
+    "sql"
+  ],
+  "author": "Aryman Rawat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rawat-aryman/Flyht/issues"
+  },
+  "homepage": "https://github.com/rawat-aryman/Flyht#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
+}
