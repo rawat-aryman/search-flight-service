@@ -1,6 +1,8 @@
 const express = require("express");
+const { CityRepository } = require('./repository/city-repository');
 const { PORT } = require("./config/db");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+
 
 
 
@@ -10,6 +12,7 @@ const setupAndStartServer = () => {
 
     app.use(bodyParser);
     app.use(bodyParser.urlencoded({extended : true}));
+
 
     app.listen(3000, () => {
         console.log(`Server is listening at ${PORT}`);

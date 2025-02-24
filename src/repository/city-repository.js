@@ -1,13 +1,17 @@
-const City = require('../models/index');
+const {City} = require('../models/index');
 
 class CityRepository {
     async createCity({ name }){
         try{
-            const city = await City.create({ name });
-            return city;
+            console.log(name);
+            console.log("hello");
+            const city = await City.create({ 
+                name: name
+             });
+            console.log(city);
 
         }catch(error){
-            throw {error};
+            throw new Error('Cannot create city: ' + error.message);
         }
     }
 
@@ -18,8 +22,10 @@ class CityRepository {
                     id: cityId,
                 }
             });
+
+            console.log("City deleted successfully with id " , cityId);
         } catch (error) {
-            throw {error};
+            throw new Error('Cannot delete city: ' + error.message);
         }
     }
 
@@ -38,7 +44,7 @@ class CityRepository {
             return city;
         } catch (error) {
             console.log("Something went wrong in the city-repository getCity fn");
-            throw {error};
+            throw new Error('Cannot get city: ' + error.message);
         }
     }
 
@@ -55,11 +61,18 @@ class CityRepository {
 
             await city.save();
 
+            console.log("City updated successfully");
+
             // 2nd way to update
-            const [results, metadata] = await sequelize.query('UPDATE cities SET name = name where id = cityId');
+            // const [results, metadata] = await sequelize.query('UPDATE cities SET name = name where id = cityId');
         } catch (error) {
-            
+            console.log("Something went wrong in the city-repository updateCity fn");
+            throw new Error('Cannot update city: ' + error.message);
         }
     }
 
+}
+
+module.exports = {
+    CityRepository
 }
