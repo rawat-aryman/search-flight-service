@@ -14,20 +14,20 @@ class CityRepository {
         }
     }
 
-    async deleteCity(cityId){
-        try {
-            await City.destroy({
-                where: {
-                    id: cityId,
-                }
-            });
+    async deleteCity(id){
+        // try {
+            
+        // }
 
-            console.log("City deleted successfully with id " , cityId);
+        await City.destroy({
+            where: {
+                id: id
+            }
+        });
 
-            return true;
-        } catch (error) {
-            throw new Error('Cannot delete city: ' + error.message);
-        }
+        console.log("City deleted successfully with id " , id);
+
+        return true;
     }
 
     async getCity(cityId){
@@ -49,12 +49,12 @@ class CityRepository {
         }
     }
 
-    async updateCity({cityId, name}){
+    async updateCity(id, {name}){
         try {
             // 1st way to update
             const city = await City.findOne({
                 where: {
-                    id: cityId,
+                    id: id,
                 }
             })
 
@@ -63,7 +63,7 @@ class CityRepository {
             await city.save();
 
             console.log("City updated successfully");
-
+            return city;
             // 2nd way to update
             // const [results, metadata] = await sequelize.query('UPDATE cities SET name = name where id = cityId');
         } catch (error) {

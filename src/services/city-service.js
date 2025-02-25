@@ -23,54 +23,53 @@ class CityService{
         }
     }
 
-    async deleteCity(data){ // { id: "cityId"}
+    async deleteCity(id){ // { id: "cityId"}
         try {
-            const response = await this.cityRepository.deleteCity({ id });
-            if(response === true){
-                console.log(`City with cityid ${city.id} deleted`);
+            const response = await this.cityRepository.deleteCity(id);
+            console.log(response);
+            if(response){
+                console.log(`City with cityid ${id} deleted`);
             }
-            else{
-                console.log("Something went wrong while deleting the city");
-                throw new Error("Cannot delete city, city is null");
-            }
+           
 
-            return city;
+            return response;
         } catch (error) {
             console.log("Something went wrong DELETE city service");
             throw new Error("Cannot delete city " + error.message);
         }
     }
 
-    async getCity(data){ // { id: "cityId"}
+    async getCity(id){ // { id: "cityId"}
         try {
-            const response = await this.cityRepository.getCity({ id });
+            const response = await this.cityRepository.getCity(id);
             if(response !== null){
-                console.log(`City with cityid ${response.id} returned`);
+                console.log(`City with cityid ${id} returned`);
             }
             else{
                 console.log("Something went wrong while getting the city");
                 throw new Error("Cannot get city, city is null");
             }
 
-            return city;
+            return response;
         } catch (error) {
             console.log("Something went wrong GET city service");
             throw new Error("Cannot get city " + error.message);
         }
     }
 
-    async updateCity(data){ // { id: "cityId"}
+    async updateCity(id, data){ // { id: "cityId", name: "cityName"}
         try {
-            const response = await this.cityRepository.updateCity(data);
+            const response = await this.cityRepository.updateCity(id, data);
+            console.log(response);
             if(response !== null){
-                console.log(`City with cityid ${response.id} updated`);
+                console.log(`City with cityid ${id} updated`);
             }
             else{
                 console.log("Something went wrong while updating the city");
                 throw new Error("Cannot update city, city is null");
             }
 
-            return city;
+            return response;
         } catch (error) {
             console.log("Something went wrong PATCH city service");
             throw new Error("Cannot update city " + error.message);
