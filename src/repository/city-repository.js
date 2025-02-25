@@ -3,12 +3,11 @@ const {City} = require('../models/index');
 class CityRepository {
     async createCity({ name }){
         try{
-            console.log(name);
-            console.log("hello");
             const city = await City.create({ 
                 name: name
-             });
-            console.log(city);
+            });
+            if(city) console.log(`City ${city.name} created successfully`);
+            return city;
 
         }catch(error){
             throw new Error('Cannot create city: ' + error.message);
@@ -24,6 +23,8 @@ class CityRepository {
             });
 
             console.log("City deleted successfully with id " , cityId);
+
+            return true;
         } catch (error) {
             throw new Error('Cannot delete city: ' + error.message);
         }
