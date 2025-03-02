@@ -86,6 +86,19 @@ class CityService{
             throw new Error("Cannot get all city " + error.message);
         }
     }
+
+    async searchCity(query){
+        
+        try {
+            const response = await this.cityRepository.searchCity(query);
+    
+            return response;
+            
+        } catch (error) {
+            console.log("Something went wrong search city service");
+            throw new Error("Cannot search city " + error.message);
+        }
+    }
 }
 
 module.exports = {

@@ -145,10 +145,38 @@ const getAllCity = async (req, res, next) => {
     }
 }
 
+const searchCity = async(req,res,next) => {
+    try {
+        const query = req.query.name;
+        const response = await cityService.searchCity(query);
+
+        if(response === null){
+            response = `No city found starting with the string: ${query}`;
+            console.log(response);
+        }
+
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: `Cities starting with string: ${query} returned`,
+            err: {}
+        })
+    } catch (error) {
+        console.log("Something went wrong in the city controller searchCity fn");
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Something went wrong",
+            err: error.message
+        })
+    }
+}
+
 module.exports = {
     createCity,
     deleteCity,
     getCity,
     updateCity,
-    getAllCity
+    getAllCity,
+    searchCity
 }
