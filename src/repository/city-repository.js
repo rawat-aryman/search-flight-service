@@ -72,6 +72,18 @@ class CityRepository {
         }
     }
 
+    async getAllCtiy(){
+        try {
+            const response = await City.findAll();
+            console.log("returned all the cities");
+            console.log(response);
+            return response;
+        } catch (error) {
+            console.log("Something went wrong in the city-repository getAllCity fn");
+            throw new Error('Cannot returned all cities: ' + error.message);
+        }
+    }
+
 }
 
 module.exports = {

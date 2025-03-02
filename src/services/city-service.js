@@ -75,6 +75,17 @@ class CityService{
             throw new Error("Cannot update city " + error.message);
         }
     }
+
+    async getAllCity(){
+        try {
+            const response = await this.cityRepository.getAllCtiy();
+
+            return response;
+        } catch (error) {
+            console.log("Something went wrong GET ALL city service");
+            throw new Error("Cannot get all city " + error.message);
+        }
+    }
 }
 
 module.exports = {

@@ -120,9 +120,35 @@ const updateCity = async (req,res,next) => {
     }
 }
 
+const getAllCity = async (req, res, next) => {
+    try {
+        const response = await cityService.getAllCity();
+
+        if(response === null){
+            response = "No cities to return";
+        }
+
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: "Cities returned successfully",
+            err: {}
+        });
+    } catch (error) {
+        console.log("Something went wrong while returning all cities");
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Cannot return all city",
+            err: error.message
+        });
+    }
+}
+
 module.exports = {
     createCity,
     deleteCity,
     getCity,
-    updateCity
+    updateCity,
+    getAllCity
 }
