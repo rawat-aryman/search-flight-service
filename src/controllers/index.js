@@ -1,4 +1,5 @@
 const { createCity, deleteCity, getCity, updateCity, getAllCity, searchCity } = require("./city-controller");
+const { getAirport, addAirport, deleteAirport, updateAirport } = require('./airport-controller');
 
 module.exports = {
     createCity,
@@ -6,5 +7,9 @@ module.exports = {
     getCity,
     updateCity,
     getAllCity,
-    searchCity
+    searchCity,
+    getAirport,
+    addAirport,
+    deleteAirport, 
+    updateAirport
 }
