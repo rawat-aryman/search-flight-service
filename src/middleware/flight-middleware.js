@@ -1,7 +1,6 @@
 const { Helper } = require('../utils/helper');
 
 const helper = new Helper();
-console.log(helper);
 
 // class FlightMiddleware{
 
@@ -25,7 +24,7 @@ console.log(helper);
 
 const createFlightData = (data) => {
     try {
-        const keys = ["flightId", "departureAirportId", "arrivalAirportId", "departureTime", "arrivalTime", "price"];
+        const keys = ["flightId", "departureAirportId", "arrivalAirportId", "departureTime", "arrivalTime", "price", "airplaneId"];
 
         if(!helper.checkUndefined(data,keys)){
             throw new Error('Please provide valid data to create a new flight');

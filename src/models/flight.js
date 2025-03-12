@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       allowNull: false,
       type: DataTypes.INTEGER
+    },
+    airplaneId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
