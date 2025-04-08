@@ -3,10 +3,11 @@ const airportController = require('../../../controllers/index');
 
 const router = express.Router();
 
+// Airport GET all airports
+router.get('/all',airportController.getAllAirport);
 
 // Airport GET api
-router.get(':airportId',airportController.getAirport);
-
+router.get('/:airportId',airportController.getAirport);
 
 // Airport DELETE api
 router.delete('/:id', airportController.deleteAirport);

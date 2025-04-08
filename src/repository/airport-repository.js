@@ -1,35 +1,28 @@
 const {City, Airport} = require('../models/index');
+const { CrudRepository } = require('./crud-repository');
 
-class AirportRepository {
+
+class AirportRepository extends CrudRepository{
+
+    constructor(){
+        super(Airport);
+    }
 
     async getAirport(airportId){
         try {
-            // EAGER LOADING
-            // const response = await Airport.findOne({
-            //     where: {
-            //         id: airportId
-            //     },
-            //     include: City,
-            // });
+            const response = await this.getInstance(airportId);
 
-            // LAZY LOADING
-            const response = await Airport.findOne({
-                where: {
-                    id: airportId,
-                }
-            })
+            return response;
+        } catch (error) {
+            throw new Error('Something went wrong in Airport repository');
+        }
+    }
 
-            const {name, address} = response;
+    async getAllAirport(){
+        try {
+            const response = await Airport.findAll();
 
-            const {name:cityName} = await response.getCity();
-
-            const final = {
-                name,
-                address,
-                cityName
-            }
-            
-            return final;
+            return response;
         } catch (error) {
             console.log('Something went wront while returning airport with Id ' + airportId);
             throw new Error(error);
@@ -39,18 +32,21 @@ class AirportRepository {
     async addAirport(data){
         try {
             const {name:airportName, address:airportAddress, cityId} = data;
-            console.log(`cityId is equal to ${cityId}`);
             
             if(cityId !== undefined){
                 const city = await City.findOne({
-                    id: cityId
+                    where: {
+                        id: cityId
+                    }
                 })
+
+                console.log(city);
             }
             else{
                 throw new Error("Please pass valid cityId");
             }
 
-            const response = await Airport.create({
+            const response = await this.createInstance({
                 name: airportName,
                 address: airportAddress,
                 cityId
@@ -69,11 +65,7 @@ class AirportRepository {
             const {airportId} = data;
 
             // making call to db to delete the entry
-            const response = await Airport.destroy({
-                where: {
-                    id : airportId,
-                },
-            });
+            const response = await this.deleteInstance(airportId);
 
             if(response === 0){
                 throw new Error('Provide valid airport Id')
@@ -117,16 +109,9 @@ class AirportRepository {
             const ans = fetchData();
 
             // updating the airport data
-            const response = await Airport.update(
-                ans,
-                {
-                    where: {
-                        id: data.airportId,
-                    },
-                }
-            )
+            const response = await this.updateInstance(data.airportId, ans);
 
-            const updateData = await Airport.findByPk(data.airportId);
+            const updateData = await this.getInstance(data.airportId);
 
             // if(response == []){
             //     throw new Error(`Something went wrong while updating airport with Id : ${data.airportId}`);

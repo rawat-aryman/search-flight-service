@@ -1,40 +1,21 @@
 const { AirportRepository } = require('../repository/index');
+const { CrudService } = require('./crud-service');
 
 const airportRepository = new AirportRepository();
 
-class AirportService {
+class AirportService extends CrudService {
 
-    async getAirport(airportId){
-        try {
-            const initialResponse = await airportRepository.getAirport(airportId);
-
-            return initialResponse;
-        } catch (error) {
-            console.log("Something went wrong with airport service GET Airport");
-            throw new Error(error);
-        }
+    constructor(){
+        super(airportRepository)
     }
 
-    async addAirport(data){
+    async getAllAirport(){
         try {
-            const response = await airportRepository.addAirport(data);
-
-            console.log("Airport added successfully");
+            const response = await airportRepository.getAllAirport();
+            console.log(response);
             return response;
         } catch (error) {
-            console.log("Something went wrong while adding airport in airport service");
-            throw new Error(error);
-        }
-    }
-
-    async deleteAirport(data){
-        try {
-            const response = await airportRepository.deleteAirport(data);
-
-            console.log("Airport deleted successfully");
-            return response;
-        } catch (error) {
-            console.log("Something went wrong while deleting airport in airport service");
+            console.log("Something went wrong with airport service GET all Airports");
             throw new Error(error);
         }
     }

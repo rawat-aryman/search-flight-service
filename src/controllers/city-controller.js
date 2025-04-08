@@ -1,11 +1,13 @@
 const { CityService } = require('../services/index');
+const { success_codes, server_errors, client_side_errors } = require('../utils/error-codes');
+const { returnResponse } = require('../utils/response-format');
 
 const cityService = new CityService();
 
 const createCity = async (req,res,next) => {
     try {
         const data = req.body;
-        const city = await cityService.createCity(data);
+        const city = await cityService.addInstanceService(data);
 
         if(city === null){
             console.log("Cannot create city");
@@ -14,28 +16,18 @@ const createCity = async (req,res,next) => {
 
         console.log("City created successfully");
         console.log(city);
-        return res.status(201).json({
-            data: city,
-            success: true,
-            message: "City created successfully",
-            err: {}
-        });
+        return res.status(success_codes.created).json(returnResponse(1,city,'City created successfully'));
         
     } catch (error) {
         console.log("Something went wrong while creating cities");
-        return res.status(500).json({
-            data: {},
-            success: false,
-            message: "Cannot create city",
-            err: error.message
-        });
+        return res.status(server_errors.internal_server_error).json(returnResponse(0,error.message,'Something went wrong while creating Cty -- city controller'));
     }
 }
 
 const deleteCity = async (req,res,next) => {
     try {
         const id = req.params.id;
-        const response = await cityService.deleteCity(id);
+        const response = await cityService.deleteInstanceService(id);
 
         if(response === false){
             console.log("Cannot delete city");
@@ -44,27 +36,17 @@ const deleteCity = async (req,res,next) => {
 
         console.log("City deleted successfully with id " + id);
         
-        return res.status(200).json({
-            data: response,
-            success: true,
-            message: `City with id: ${id} successfully`,
-            err: {}
-        });
+        return res.status(success_codes.ok).json(returnResponse(1,response,'City deleted successfully'));
     } catch (error) {
         console.log("Something went wrong while deleting cities");
-        return res.status(500).json({
-            data: {},
-            success: false,
-            message: "Cannot delete city",
-            err: error.message
-        });
+        return res.status(server_errors.internal_server_error).json(returnResponse(0,error.message,'Something went wrong while deleting Cty -- city controller'));
     }
 }
 
 const getCity = async (req,res,next) => {
     try {
         const id = req.params.id;
-        const response = await cityService.getCity(id);
+        const response = await cityService.getInstanceService(id);
 
         if(response === null){
             console.log("Cannot get city");
@@ -72,21 +54,11 @@ const getCity = async (req,res,next) => {
         }
 
         console.log("City returned successfully with id " + id);
-        return res.status(200).json({
-            data: response,
-            success: true,
-            message: "City returned successfully",
-            err: {}
-        });
+        return res.status(success_codes.ok).json(returnResponse(1,response,'City returned successfully'));
         
     } catch (error) {
         console.log("Something went wrong while getting cities");
-        return res.status(500).json({
-            data: {},
-            success: false,
-            message: "Cannot get city",
-            err: error.message
-        });
+        return res.status(server_errors.internal_server_error).json(returnResponse(0,error.message,'Something went wrong while returning Cty -- city controller'));
     }
 }
 
@@ -94,7 +66,7 @@ const updateCity = async (req,res,next) => {
     try {
         const data = req.body;
         const id = req.params.id;
-        const response = await cityService.updateCity(id,data);
+        const response = await cityService.updateInstanceService(id,data);
 
         if(response === null){
             console.log("Cannot update city");
@@ -102,21 +74,11 @@ const updateCity = async (req,res,next) => {
         }
 
         console.log("City updated successfully with id " + id);
-        return res.status(200).json({
-            data: response,
-            success: true,
-            message: "City updated successfully",
-            err: {}
-        });
+        return res.status(success_codes.ok).json(returnResponse(1,response,'City updated successfully'));
         
     } catch (error) {
         console.log("Something went wrong while updating cities");
-        return res.status(500).json({
-            data: {},
-            success: false,
-            message: "Cannot update city",
-            err: error.message
-        });
+        return res.status(server_errors.internal_server_error).json(returnResponse(0,error.message,'Something went wrong while updating Cty -- city controller'));
     }
 }
 
@@ -128,20 +90,10 @@ const getAllCity = async (req, res, next) => {
             response = "No cities to return";
         }
 
-        return res.status(200).json({
-            data: response,
-            success: true,
-            message: "Cities returned successfully",
-            err: {}
-        });
+        return res.status(success_codes.ok).json(returnResponse(1,response,'All Cities returned successfully'));
     } catch (error) {
         console.log("Something went wrong while returning all cities");
-        return res.status(500).json({
-            data: {},
-            success: false,
-            message: "Cannot return all city",
-            err: error.message
-        });
+        return res.status(server_errors.internal_server_error).json(returnResponse(0,error.message,'Something went wrong while returning all Cities -- city controller'));
     }
 }
 
@@ -155,20 +107,10 @@ const searchCity = async(req,res,next) => {
             console.log(response);
         }
 
-        return res.status(200).json({
-            data: response,
-            success: true,
-            message: `Cities starting with string: ${query} returned`,
-            err: {}
-        })
+        return res.status(success_codes.ok).json(returnResponse(1,response,'City matching returned successfully'));
     } catch (error) {
         console.log("Something went wrong in the city controller searchCity fn");
-        return res.status(500).json({
-            data: {},
-            success: false,
-            message: "Something went wrong",
-            err: error.message
-        })
+        return rres.status(server_errors.internal_server_error).json(returnResponse(0,error.message,'Something went wrong while searching Cty -- city controller'));
     }
 }
 

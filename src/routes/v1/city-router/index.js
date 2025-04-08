@@ -5,10 +5,10 @@ const cityController = require('../../../controllers/index');
 const router = express.Router();
 
 
+router.get("/all", cityController.getAllCity);
 // GET apis
 router.get('/:id',cityController.getCity);
 
-router.get("/all", cityController.getAllCity);
 
 router.get("/search", cityController.searchCity);
 

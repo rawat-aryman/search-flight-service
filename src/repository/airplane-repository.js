@@ -1,6 +1,11 @@
 const {Airplane} = require('../models/index');
+const {CrudRepository} = require('./crud-repository');
 
-class AirplaneRepository{
+class AirplaneRepository extends CrudRepository{
+
+    constructor(){
+        super(Airplane);
+    }
 
     async getCapacity(id){
         try {
@@ -15,6 +20,8 @@ class AirplaneRepository{
             throw new Error(error);
         }
     }
+
+
 }
 
 module.exports = {
